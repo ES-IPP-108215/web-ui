@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --muted: 0 0% 94.12%;
+    --muted-foreground: 0 0% 53.33%;
+    --popover: 188 40% 98%;
+    --popover-foreground: 188 72% 4%;
+    --card: 188 40% 98%;
+    --card-foreground: 188 72% 4%;
+    --border: 188 98.36% 76.08%;
+    --input: 214.29 31.82% 91.37%;
+    --primary: 188 98% 76%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 317.42 91.18% 86.67%;
+    --secondary-foreground: 0 0% 0%;
+    --accent: 0 0% 94.12%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 352.96 100% 64.9%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 187.5 98.36% 76.08%;
+    --radius: 0.5rem;
+
+    /* New chart colors */
+    --chart-1: 188 98% 76%;
+    --chart-2: 317 91% 87%;
+    --chart-3: 43 96% 75%;
+    --chart-4: 152 76% 74%;
+    --chart-5: 271 91% 85%;
+
+    /* New sidebar colors */
+    --sidebar-background: 188 40% 98%;
+    --sidebar-foreground: 188 72% 4%;
+    --sidebar-primary: 188 98% 76%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 317.42 91.18% 86.67%;
+    --sidebar-accent-foreground: 0 0% 0%;
+    --sidebar-border: 188 98.36% 76.08%;
+    --sidebar-ring: 187.5 98.36% 76.08%;
+  }
+
+  .dark {
+    --background: 188 0% 0%;
+    --foreground: 188 0% 100%;
+    --muted: 0 0% 26.92%;
+    --muted-foreground: 188 4% 60%;
+    --popover: 188 0% 0%;
+    --popover-foreground: 188 0% 100%;
+    --card: 188 0% 0%;
+    --card-foreground: 188 23% 99%;
+    --border: 190 14.63% 16.08%;
+    --input: 188 5% 15%;
+    --primary: 188 98% 76%;
+    --primary-foreground: 188 0% 0%;
+    --secondary: 317.42 91.18% 86.67%;
+    --secondary-foreground: 188 0% 0%;
+    --accent: 188 15% 16%;
+    --accent-foreground: 188 15% 76%;
+    --destructive: 352.96 100% 64.9%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 188 98% 76%;
+
+    /* New chart colors for dark mode */
+    --chart-1: 188 98% 76%;
+    --chart-2: 317 91% 87%;
+    --chart-3: 43 96% 75%;
+    --chart-4: 152 76% 74%;
+    --chart-5: 271 91% 85%;
+
+    /* New sidebar colors for dark mode */
+    --sidebar-background: 188 15% 16%;
+    --sidebar-foreground: 188 15% 76%;
+    --sidebar-primary: 188 98% 76%;
+    --sidebar-primary-foreground: 188 0% 0%;
+    --sidebar-accent: 317.42 91.18% 86.67%;
+    --sidebar-accent-foreground: 188 0% 0%;
+    --sidebar-border: 190 14.63% 16.08%;
+    --sidebar-ring: 188 98% 76%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
