@@ -40,12 +40,7 @@ const CleanLayout: React.FC = () => {
 
   return (
     <SidebarProvider>
-      <Navbar 
-        isLoggedIn={isLoggedIn} 
-        user={user} 
-        onLogin={handleLogin} 
-        onLogout={handleLogout} 
-      />
+      <Navbar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
