@@ -29,20 +29,21 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar"
+import { Link } from 'react-router-dom'
 
 interface NavbarFooterProps {
-  isLoggedIn: boolean
-  user: { name: string; email: string; avatar: string } | null
-  onLogin: () => void
-  onLogout: () => void
+  token: string;
+  givenName: string;
+  familyName: string;
+  email: string;
 }
 
-const NavbarFooter: React.FC<NavbarFooterProps> = ({ isLoggedIn, user, onLogin, onLogout }) => {
+const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyName, email }) => {
   return (
     <SidebarFooter>
       <SidebarMenu>
         <SidebarMenuItem>
-          {isLoggedIn ? (
+          {token ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
@@ -51,19 +52,19 @@ const NavbarFooter: React.FC<NavbarFooterProps> = ({ isLoggedIn, user, onLogin, 
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage
-                      src={user?.avatar}
-                      alt={user?.name}
+                      src="https://avatars.dicebear.com/api/avataaars/john-doe.svg"
+                      alt={givenName + ' ' + familyName}
                     />
                     <AvatarFallback className="rounded-lg">
-                      {user?.name.split(' ').map(n => n[0]).join('')}
+                      {givenName[0] + familyName[0]}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">
-                      {user?.name}
+                      {givenName + ' ' + familyName}
                     </span>
                     <span className="truncate text-xs">
-                      {user?.email}
+                      {email}
                     </span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
@@ -79,19 +80,19 @@ const NavbarFooter: React.FC<NavbarFooterProps> = ({ isLoggedIn, user, onLogin, 
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="h-8 w-8 rounded-lg">
                       <AvatarImage
-                        src={user?.avatar}
-                        alt={user?.name}
+                        src="https://avatars.dicebear.com/api/avataaars/john-doe.svg"
+                        alt={givenName + ' ' + familyName}
                       />
                       <AvatarFallback className="rounded-lg">
-                        {user?.name.split(' ').map(n => n[0]).join('')}
+                        {givenName[0] + familyName[0]}
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold">
-                        {user?.name}
+                        {givenName + ' ' + familyName}
                       </span>
                       <span className="truncate text-xs">
-                        {user?.email}
+                        {email}
                       </span>
                     </div>
                   </div>
@@ -120,21 +121,22 @@ const NavbarFooter: React.FC<NavbarFooterProps> = ({ isLoggedIn, user, onLogin, 
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={onLogout}>
+                <DropdownMenuItem>
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button
-              variant="outline"
-              className="w-full justify-start"
-              onClick={onLogin}
-            >
-              <UserPlus className="mr-2 h-4 w-4" />
-              Register / Login
-            </Button>
+            <Link to={import.meta.env.VITE_LOGIN_SIGN_UP}>
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+              >
+                <UserPlus className="mr-2 h-4 w-4" />
+                Register / Login
+              </Button>
+            </Link>
           )}
         </SidebarMenuItem>
       </SidebarMenu>

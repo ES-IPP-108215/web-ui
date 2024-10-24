@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { useQuery } from '@tanstack/react-query'
+import { useUserStore } from '@/stores/useUserStore'
+import { UserService } from "@/services/Client/UserService"
 
 type TaskStatus = 'todo' | 'doing' | 'finished'
 
@@ -30,6 +33,7 @@ const priorityColors = {
 }
 
 const TaskCard: React.FC<{ task: Task; onDragStart: (e: React.DragEvent, taskId: string) => void }> = ({ task, onDragStart }) => (
+
   <motion.div
     layout
     initial={{ opacity: 0 }}
@@ -76,6 +80,25 @@ const TaskColumn: React.FC<{
 
 export default function HomePage() {
   const [tasks, setTasks] = useState<Task[]>(initialTasks)
+
+  const { token, setUserInformation } = useUserStore()
+
+  const fetchUser = async () => {
+    const response = await UserService.getUser()
+    return response.data
+  }
+
+  const { data } = useQuery({
+    queryKey: ["user"],
+    queryFn: fetchUser,
+    enabled: !!token,
+  })
+
+  useEffect(() => {
+    if (data && token) {
+      setUserInformation(data)
+    }
+  }, [data, setUserInformation, token])
 
   const onDragStart = (e: React.DragEvent, taskId: string) => {
     e.dataTransfer.setData('taskId', taskId)
