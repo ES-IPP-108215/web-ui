@@ -36,9 +36,10 @@ interface NavbarFooterProps {
   givenName: string;
   familyName: string;
   email: string;
+  onLogout: () => void;
 }
 
-const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyName, email }) => {
+const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyName, email, onLogout }) => {
   return (
     <SidebarFooter>
       <SidebarMenu>
@@ -122,8 +123,14 @@ const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyNam
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
+                  <LogOut className="h-4 w-4" />
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start -translate-x-2"
+                    onClick={onLogout}
+                  >
+                    Logout
+                  </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
