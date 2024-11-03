@@ -41,7 +41,7 @@ interface NavbarFooterProps {
 
 const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyName, email, onLogout }) => {
   return (
-    <SidebarFooter>
+    <SidebarFooter className="p-4 bg-background">
       <SidebarMenu>
         <SidebarMenuItem>
           {token ? (
@@ -51,48 +51,48 @@ const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyNam
                   size="lg"
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
-                  <Avatar className="h-8 w-8 rounded-lg">
+                  <Avatar className="h-10 w-10 rounded-lg">
                     <AvatarImage
                       src="https://avatars.dicebear.com/api/avataaars/john-doe.svg"
                       alt={givenName + ' ' + familyName}
                     />
-                    <AvatarFallback className="rounded-lg">
+                    <AvatarFallback className="rounded-lg text-lg">
                       {givenName[0] + familyName[0]}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">
+                  <div className="grid flex-1 text-left leading-tight ml-3">
+                    <span className="truncate font-semibold text-base">
                       {givenName + ' ' + familyName}
                     </span>
-                    <span className="truncate text-xs">
+                    <span className="truncate text-sm text-muted-foreground">
                       {email}
                     </span>
                   </div>
-                  <ChevronsUpDown className="ml-auto size-4" />
+                  <ChevronsUpDown className="ml-auto size-5" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                side="bottom"
+                side="top"
                 align="end"
                 sideOffset={4}
               >
                 <DropdownMenuLabel className="p-0 font-normal">
-                  <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                    <Avatar className="h-8 w-8 rounded-lg">
+                  <div className="flex items-center gap-3 px-2 py-2 text-left">
+                    <Avatar className="h-10 w-10 rounded-lg">
                       <AvatarImage
                         src="https://avatars.dicebear.com/api/avataaars/john-doe.svg"
                         alt={givenName + ' ' + familyName}
                       />
-                      <AvatarFallback className="rounded-lg">
+                      <AvatarFallback className="rounded-lg text-lg">
                         {givenName[0] + familyName[0]}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">
+                    <div className="grid flex-1 text-left leading-tight">
+                      <span className="truncate font-semibold text-base">
                         {givenName + ' ' + familyName}
                       </span>
-                      <span className="truncate text-xs">
+                      <span className="truncate text-sm text-muted-foreground">
                         {email}
                       </span>
                     </div>
@@ -101,32 +101,31 @@ const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyNam
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    <span>Upgrade to Pro</span>
-                  
+                    <Sparkles className="mr-3 h-5 w-5" />
+                    <span className="text-base">Upgrade to Pro</span>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
-                    <BadgeCheck className="mr-2 h-4 w-4" />
-                    <span>Account</span>
+                    <BadgeCheck className="mr-3 h-5 w-5" />
+                    <span className="text-base">Account</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    <span>Billing</span>
+                    <CreditCard className="mr-3 h-5 w-5" />
+                    <span className="text-base">Billing</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Bell className="mr-2 h-4 w-4" />
-                    <span>Notifications</span>
+                    <Bell className="mr-3 h-5 w-5" />
+                    <span className="text-base">Notifications</span>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <LogOut className="h-4 w-4" />
+                  <LogOut className="mr-3 h-5 w-5" />
                   <Button
                     variant="ghost"
-                    className="w-full justify-start -translate-x-2"
+                    className="w-full justify-start -translate-x-2 text-base"
                     onClick={onLogout}
                   >
                     Logout
@@ -138,9 +137,9 @@ const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyNam
             <Link to={import.meta.env.VITE_LOGIN_SIGN_UP}>
               <Button
                 variant="outline"
-                className="w-full justify-start"
+                className="w-full justify-start text-base py-3"
               >
-                <UserPlus className="mr-2 h-4 w-4" />
+                <UserPlus className="mr-3 h-5 w-5" />
                 Register / Login
               </Button>
             </Link>

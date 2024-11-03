@@ -6,10 +6,12 @@ import NavbarFooter from './components/NavbarFooter'
 import { useUserStore } from "@/stores/useUserStore";
 import { useMutation } from "@tanstack/react-query";
 import { UserService } from "@/services/Client/UserService";
+import { useNavigate } from 'react-router-dom'
 
 
 const Navbar: React.FC = () => {
   const { token, givenName, familyName, logout: zustandLogout, email } = useUserStore();
+  const navigate = useNavigate();
 
   const logout = async () => {
     const response = await UserService.logout();
@@ -21,7 +23,6 @@ const Navbar: React.FC = () => {
     onSuccess: (data) => {
       console.log(data);
       zustandLogout();
-      window.location.reload();
     },
     onError: (error) => {
       console.error("Logout falhou:", error);
@@ -30,6 +31,7 @@ const Navbar: React.FC = () => {
 
   const handleLogout = () => {
     logoutMutation.mutate();
+    navigate('/');
   }
 
   return (

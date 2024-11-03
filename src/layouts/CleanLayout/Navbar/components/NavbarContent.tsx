@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import {
   SquareTerminal,
   Bot,
@@ -7,7 +8,8 @@ import {
   AlertCircle,
   Clock,
   CheckCircle2,
-  Calendar
+  Calendar,
+  Home
 } from "lucide-react"
 import {
   SidebarContent,
@@ -22,10 +24,14 @@ import { Badge } from "@/components/ui/badge"
 const data = {
   navMain: [
     {
-      title: "Tasks",
+      title: "Home",
       url: "/",
+      icon: Home,
+    },
+    {
+      title: "Tasks",
+      url: "/tasks",
       icon: SquareTerminal,
-      isActive: true,
     },
     {
       title: "Calendar",
@@ -74,44 +80,49 @@ const data = {
 }
 
 const NavbarContent: React.FC = () => {
+  const location = useLocation()
+
   return (
-    <SidebarContent className="py-4">
-      <SidebarGroup className="mb-4">
-        <SidebarGroupLabel className="px-4 mb-2">Platform</SidebarGroupLabel>
+    <SidebarContent className="py-6 bg-background">
+      <SidebarGroup className="mb-6">
+        <SidebarGroupLabel className="px-4 mb-3 text-lg font-handwritten">Platform</SidebarGroupLabel>
         <SidebarMenu>
-          {data.navMain.map((item) => (
-            <SidebarMenuItem key={item.title} className="px-2">
-              <SidebarMenuButton 
-                asChild 
-                tooltip={item.title} 
-                isActive={item.isActive}
-                className="py-2 w-full"
-              >
-                <a href={item.url} className="flex items-center">
-                  <item.icon className="mr-3 h-4 w-4 flex-shrink-0" />
-                  <span className="truncate">{item.title}</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {data.navMain.map((item) => {
+            const isActive = location.pathname === item.url
+            return (
+              <SidebarMenuItem key={item.title} className="px-2">
+                <SidebarMenuButton 
+                  asChild 
+                  tooltip={item.title} 
+                  isActive={isActive}
+                  className={`py-3 w-full text-lg ${isActive ? 'bg-primary/10 text-primary' : 'hover:bg-accent hover:text-accent-foreground'}`}
+                >
+                  <Link to={item.url} className="flex items-center transition-colors duration-300">
+                    <item.icon className={`mr-4 h-5 w-5 flex-shrink-0 ${isActive ? 'text-primary' : ''}`} />
+                    <span className="truncate">{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )
+          })}
         </SidebarMenu>
       </SidebarGroup>
 
-      <SidebarGroup className="mb-4">
-        <SidebarGroupLabel className="px-4 mb-2">Upcoming Tasks</SidebarGroupLabel>
+      <SidebarGroup className="mb-6">
+        <SidebarGroupLabel className="px-4 mb-3 text-lg font-handwritten">Upcoming Tasks</SidebarGroupLabel>
         <SidebarMenu>
           {data.tasks.map((task, index) => (
             <SidebarMenuItem key={task.title} className="px-2">
               <SidebarMenuButton
                 asChild
-                className={`py-2 w-full ${index === 0 ? "bg-primary/10 hover:bg-primary/20" : ""}`}
+                className={`py-3 w-full ${index === 0 ? "bg-primary/10 hover:bg-primary/20" : "hover:bg-accent hover:text-accent-foreground"}`}
               >
                 <a href="#" className="flex items-center justify-between">
                   <div className="flex items-center min-w-0">
-                    <task.icon className={`mr-3 h-4 w-4 flex-shrink-0 ${index === 0 ? "text-primary" : ""}`} />
-                    <span className={`truncate ${index === 0 ? "font-semibold" : ""}`}>{task.title}</span>
+                    <task.icon className={`mr-4 h-5 w-5 flex-shrink-0 ${index === 0 ? "text-primary" : ""}`} />
+                    <span className={`truncate text-base ${index === 0 ? "font-semibold" : ""}`}>{task.title}</span>
                   </div>
-                  <Badge variant={index === 0 ? "default" : "secondary"} className="ml-2 flex-shrink-0">
+                  <Badge variant={index === 0 ? "default" : "secondary"} className="ml-2 flex-shrink-0 text-sm">
                     {task.priority}
                   </Badge>
                 </a>
@@ -125,9 +136,9 @@ const NavbarContent: React.FC = () => {
         <SidebarMenu>
           {data.navSecondary.map((item) => (
             <SidebarMenuItem key={item.title} className="px-2">
-              <SidebarMenuButton asChild size="sm" className="py-2 w-full">
+              <SidebarMenuButton asChild size="sm" className="py-3 w-full text-base hover:bg-accent hover:text-accent-foreground">
                 <a href={item.url} className="flex items-center">
-                  <item.icon className="mr-3 h-4 w-4 flex-shrink-0" />
+                  <item.icon className="mr-4 h-5 w-5 flex-shrink-0" />
                   <span className="truncate">{item.title}</span>
                 </a>
               </SidebarMenuButton>

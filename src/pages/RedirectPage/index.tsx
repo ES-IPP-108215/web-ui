@@ -25,7 +25,7 @@ export default function RedirectPage() {
     mutationFn: login,
     onSuccess: (data) => {
       useUserStore.getState().login(data.token.token);
-      navigate('/');
+      navigate('/tasks');
     },
     onError: (error) => {
       console.error("Login failed:", error);

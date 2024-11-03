@@ -1,85 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Nunito:wght@300;400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
-    --muted: 0 0% 94.12%;
-    --muted-foreground: 0 0% 53.33%;
-    --popover: 188 40% 98%;
-    --popover-foreground: 188 72% 4%;
-    --card: 188 40% 98%;
-    --card-foreground: 188 72% 4%;
-    --border: 188 98.36% 76.08%;
-    --input: 214.29 31.82% 91.37%;
-    --primary: 188 98% 76%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 317.42 91.18% 86.67%;
-    --secondary-foreground: 0 0% 0%;
-    --accent: 0 0% 94.12%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 352.96 100% 64.9%;
-    --destructive-foreground: 0 0% 100%;
-    --ring: 187.5 98.36% 76.08%;
+    --background: 39 100% 97%;
+    --foreground: 20 14.3% 4.1%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --primary: 47 95% 56%;
+    --primary-foreground: 26 83.3% 14.1%;
+    --secondary: 358 65% 88%;
+    --secondary-foreground: 358 65% 14.1%;
+    --accent: 45 100% 50%; /* Amarelo torrado */
+    --accent-foreground: 355 100% 97%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --ring: 35 91% 32%;
     --radius: 0.5rem;
 
-    /* New chart colors */
-    --chart-1: 188 98% 76%;
-    --chart-2: 317 91% 87%;
-    --chart-3: 43 96% 75%;
-    --chart-4: 152 76% 74%;
-    --chart-5: 271 91% 85%;
+    --chart-1: 47 95% 76%;
+    --chart-2: 358 65% 88%;
+    --chart-3: 142 76% 36%;
+    --chart-4: 217 91% 60%;
+    --chart-5: 35 91% 32%;
 
-    /* New sidebar colors */
-    --sidebar-background: 188 40% 98%;
-    --sidebar-foreground: 188 72% 4%;
-    --sidebar-primary: 188 98% 76%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 317.42 91.18% 86.67%;
-    --sidebar-accent-foreground: 0 0% 0%;
-    --sidebar-border: 188 98.36% 76.08%;
-    --sidebar-ring: 187.5 98.36% 76.08%;
+    --sidebar-background: 39 100% 97%;
+    --sidebar-foreground: 20 14.3% 4.1%;
+    --sidebar-primary: 47 95% 76%;
+    --sidebar-primary-foreground: 26 83.3% 14.1%;
+    --sidebar-accent: 358 65% 88%;
+    --sidebar-accent-foreground: 358 65% 14.1%;
+    --sidebar-border: 20 5.9% 90%;
+    --sidebar-ring: 35 91% 32%;
+
+    /* New toasted yellow hover color */
+    --hover: 43 96% 75%;
   }
 
   .dark {
-    --background: 188 0% 0%;
-    --foreground: 188 0% 100%;
-    --muted: 0 0% 26.92%;
-    --muted-foreground: 188 4% 60%;
-    --popover: 188 0% 0%;
-    --popover-foreground: 188 0% 100%;
-    --card: 188 0% 0%;
-    --card-foreground: 188 23% 99%;
-    --border: 190 14.63% 16.08%;
-    --input: 188 5% 15%;
-    --primary: 188 98% 76%;
-    --primary-foreground: 188 0% 0%;
-    --secondary: 317.42 91.18% 86.67%;
-    --secondary-foreground: 188 0% 0%;
-    --accent: 188 15% 16%;
-    --accent-foreground: 188 15% 76%;
-    --destructive: 352.96 100% 64.9%;
-    --destructive-foreground: 0 0% 100%;
-    --ring: 188 98% 76%;
+    --background: 220 26% 14%;
+    --foreground: 60 30% 96%;
+    --muted: 215 27% 25%;
+    --muted-foreground: 217 15% 65%;
+    --popover: 220 26% 14%;
+    --popover-foreground: 60 30% 96%;
+    --card: 220 26% 14%;
+    --card-foreground: 60 30% 96%;
+    --border: 215 27% 30%;
+    --input: 215 27% 30%;
+    --primary: 47 95% 76%;
+    --primary-foreground: 26 83.3% 14.1%;
+    --secondary: 358 65% 88%;
+    --secondary-foreground: 358 65% 14.1%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 355 100% 97%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --ring: 35 91% 32%;
 
-    /* New chart colors for dark mode */
-    --chart-1: 188 98% 76%;
-    --chart-2: 317 91% 87%;
-    --chart-3: 43 96% 75%;
-    --chart-4: 152 76% 74%;
-    --chart-5: 271 91% 85%;
+    --chart-1: 47 95% 76%;
+    --chart-2: 358 65% 88%;
+    --chart-3: 142 76% 36%;
+    --chart-4: 217 91% 60%;
+    --chart-5: 35 91% 32%;
 
-    /* New sidebar colors for dark mode */
-    --sidebar-background: 188 15% 16%;
-    --sidebar-foreground: 188 15% 76%;
-    --sidebar-primary: 188 98% 76%;
-    --sidebar-primary-foreground: 188 0% 0%;
-    --sidebar-accent: 317.42 91.18% 86.67%;
-    --sidebar-accent-foreground: 188 0% 0%;
-    --sidebar-border: 190 14.63% 16.08%;
-    --sidebar-ring: 188 98% 76%;
+    --sidebar-background: 220 26% 14%;
+    --sidebar-foreground: 60 30% 96%;
+    --sidebar-primary: 47 95% 76%;
+    --sidebar-primary-foreground: 26 83.3% 14.1%;
+    --sidebar-accent: 358 65% 88%;
+    --sidebar-accent-foreground: 358 65% 14.1%;
+    --sidebar-border: 215 27% 30%;
+    --sidebar-ring: 35 91% 32%;
+
+    /* Same toasted yellow hover color for dark mode */
+    --hover: 43 96% 75%;
   }
 }
 
@@ -88,6 +92,55 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-handwritten text-xl;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-handwritten;
+  }
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+  h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+  h4 {
+    @apply text-xl md:text-2xl lg:text-3xl;
+  }
+  h5 {
+    @apply text-lg md:text-xl lg:text-2xl;
+  }
+  h6 {
+    @apply text-base md:text-lg lg:text-xl;
+  }
+}
+
+@layer utilities {
+  .text-handwritten {
+    @apply font-handwritten text-3xl md:text-4xl lg:text-5xl;
+  }
+  .text-handwritten-lg {
+    @apply font-handwritten text-4xl md:text-5xl lg:text-6xl;
+  }
+  .text-handwritten-xl {
+    @apply font-handwritten text-5xl md:text-6xl lg:text-7xl;
+  }
+}
+
+/* Updated hover styles */
+@layer components {
+  .hover-effect {
+    @apply transition-colors duration-200;
+  }
+  
+  .hover-effect:hover {
+    @apply bg-[hsl(var(--hover))];
+  }
+
+  .dark .hover-effect:hover {
+    @apply bg-[hsl(var(--hover))];
   }
 }

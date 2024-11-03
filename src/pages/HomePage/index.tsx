@@ -1,149 +1,98 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { CheckCircle, Clock, Filter, List, PlusCircle, Star, ArrowLeft, ArrowUp } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { useQuery } from '@tanstack/react-query'
-import { useUserStore } from '@/stores/useUserStore'
-import { UserService } from "@/services/Client/UserService"
-
-type TaskStatus = 'todo' | 'doing' | 'finished'
-
-type Task = {
-  id: string
-  title: string
-  priority: 'low' | 'medium' | 'high'
-  status: TaskStatus
-}
-
-const initialTasks: Task[] = [
-  { id: '1', title: 'Create project proposal', priority: 'high', status: 'todo' },
-  { id: '2', title: 'Review documentation', priority: 'medium', status: 'todo' },
-  { id: '3', title: 'Prepare presentation', priority: 'low', status: 'todo' },
-  { id: '4', title: 'Implement new feature', priority: 'high', status: 'doing' },
-  { id: '5', title: 'Test integrations', priority: 'medium', status: 'doing' },
-  { id: '6', title: 'Update dependencies', priority: 'low', status: 'finished' },
-  { id: '7', title: 'Fix critical bug', priority: 'high', status: 'finished' },
-  { id: '8', title: 'Optimize database queries', priority: 'medium', status: 'finished' },
-]
-
-const priorityColors = {
-  low: 'bg-green-300',
-  medium: 'bg-yellow-200',
-  high: 'bg-red-300',
-}
-
-const TaskCard: React.FC<{ task: Task; onDragStart: (e: React.DragEvent, taskId: string) => void }> = ({ task, onDragStart }) => (
-
-  <motion.div
-    layout
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.2 }}
-  >
-    <Card 
-      className="mb-2 cursor-move"
-      draggable
-      onDragStart={(e) => onDragStart(e, task.id)}
-    >
-      <CardContent className="p-4 flex justify-between items-center">
-        <span className="text-sm">{task.title}</span>
-        <Badge className={priorityColors[task.priority]}>{task.priority}</Badge>
-      </CardContent>
-    </Card>
-  </motion.div>
-)
-
-const TaskColumn: React.FC<{ 
-  title: string; 
-  tasks: Task[]; 
-  status: TaskStatus;
-  onDragStart: (e: React.DragEvent, taskId: string) => void;
-  onDragOver: (e: React.DragEvent) => void;
-  onDrop: (e: React.DragEvent, status: TaskStatus) => void;
-}> = ({ title, tasks, status, onDragStart, onDragOver, onDrop }) => (
-  <Card className="flex-1 min-w-[300px] h-full flex flex-col">
-    <CardHeader className="text-center">
-      <CardTitle>{title}</CardTitle>
-    </CardHeader>
-    <CardContent 
-      className="flex-grow overflow-y-auto"
-      onDragOver={onDragOver}
-      onDrop={(e) => onDrop(e, status)}
-    >
-      {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} onDragStart={onDragStart} />
-      ))}
-    </CardContent>
-  </Card>
-)
 
 export default function HomePage() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks)
-
-  const { token, setUserInformation } = useUserStore()
-
-  const fetchUser = async () => {
-    const response = await UserService.getUser()
-    return response.data
-  }
-
-  const { data } = useQuery({
-    queryKey: ["user"],
-    queryFn: fetchUser,
-    enabled: !!token,
-  })
-
-  useEffect(() => {
-    if (data && token) {
-      setUserInformation(data)
-    }
-  }, [data, setUserInformation, token])
-
-  const onDragStart = (e: React.DragEvent, taskId: string) => {
-    e.dataTransfer.setData('taskId', taskId)
-  }
-
-  const onDragOver = (e: React.DragEvent) => {
-    e.preventDefault()
-  }
-
-  const onDrop = (e: React.DragEvent, newStatus: TaskStatus) => {
-    const taskId = e.dataTransfer.getData('taskId')
-    setTasks(tasks.map(task => 
-      task.id === taskId ? { ...task, status: newStatus } : task
-    ))
-  }
-
   return (
-    <div className="container mx-auto p-4 h-screen flex flex-col">
-      <h1 className="text-3xl font-bold mb-6 text-center">Task Board</h1>
-      <div className="flex-grow flex flex-col md:flex-row gap-4 overflow-hidden">
-        <TaskColumn 
-          title="To Do" 
-          tasks={tasks.filter(task => task.status === 'todo')} 
-          status="todo"
-          onDragStart={onDragStart}
-          onDragOver={onDragOver}
-          onDrop={onDrop}
+    <div className="container mx-auto px-4 py-8 h-screen-5/6 flex flex-col justify-center">
+      <header className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">Welcome to <span className='underline text-primary'>Kernaite's</span> To-Do List</h1>
+        <p className="text-xl md:text-3xl text-muted-foreground">Organize, Prioritize, and Accomplish</p>
+      </header>
+
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <FeatureCard
+          icon={<List className="h-8 w-8 text-primary" />}
+          title="Task Management"
+          description="Easily add, edit, and delete tasks. Mark them as completed when you're done."
         />
-        <TaskColumn 
-          title="Doing" 
-          tasks={tasks.filter(task => task.status === 'doing')} 
-          status="doing"
-          onDragStart={onDragStart}
-          onDragOver={onDragOver}
-          onDrop={onDrop}
+        <FeatureCard
+          icon={<Clock className="h-8 w-8 text-primary" />}
+          title="Task Deadlines"
+          description="Set deadlines for your tasks to stay on top of your schedule."
         />
-        <TaskColumn 
-          title="Finished" 
-          tasks={tasks.filter(task => task.status === 'finished')} 
-          status="finished"
-          onDragStart={onDragStart}
-          onDragOver={onDragOver}
-          onDrop={onDrop}
+        <FeatureCard
+          icon={<Star className="h-8 w-8 text-primary" />}
+          title="Task Prioritization"
+          description="Assign priorities to your tasks: low, medium, or high importance."
         />
-      </div>
+        <FeatureCard
+          icon={<Filter className="h-8 w-8 text-primary" />}
+          title="Sorting and Filtering"
+          description="Sort tasks by date, deadline, or status. Filter by category or completion."
+        />
+        <FeatureCard
+          icon={<CheckCircle className="h-8 w-8 text-primary" />}
+          title="Task Ownership"
+          description="Your tasks are private and only visible to you after authentication."
+        />
+        <FeatureCard
+          icon={<PlusCircle className="h-8 w-8 text-primary" />}
+          title="Easy Task Creation"
+          description="Quickly add new tasks with a title and description."
+        />
+      </section>
+
+      {/* Arrow for md screens and above */}
+      <motion.div 
+        className="fixed bottom-4 left-64 z-50 hidden md:flex items-center gap-2"
+        animate={{
+          x: [0, 10, 0],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <ArrowLeft className="h-12 w-12 text-primary" />
+        <span className="text-primary font-semibold text-xl">Enter Now!</span>
+      </motion.div>
+
+      {/* Mobile arrow pointing to sidebar button */}
+      <motion.div 
+        className="fixed top-12 left-3 z-50 md:hidden flex items-center"
+        animate={{
+          y: [0, -10, 0],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <ArrowUp className="h-8 w-8 text-primary" />
+        <span className="text-primary font-semibold text-md">Open Sidebar</span>
+      </motion.div>
     </div>
+  )
+}
+
+function FeatureCard({ icon, title, description }) {
+  return (
+    <Card className="flex flex-col h-full">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-xl md:text-2xl">
+          {icon}
+          <span>{title}</span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex-grow flex items-center">
+        <CardDescription className="text-lg md:text-xl">{description}</CardDescription>
+      </CardContent>
+    </Card>
   )
 }

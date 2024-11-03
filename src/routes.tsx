@@ -8,6 +8,7 @@ const RedirectPage = lazy(() => import('./pages/RedirectPage'));
 const GeneralError = lazy(() => import('./pages/ErrorPages/GeneralError'));
 const MaintenanceError = lazy(() => import('./pages/ErrorPages/MaintenanceError'));
 const NotFoundError = lazy(() => import('./pages/ErrorPages/NotFoundError'));
+const TaskPage = lazy(() => import('./pages/TaskPage'));
 
 
 function ProtectedRoute({
@@ -53,6 +54,15 @@ export const routes = [
                         <HomePage />
                     </Suspense>
                 )
+            },
+            {path: '/tasks',
+            element: (
+                <Suspense fallback={<div>Loading...</div>}>
+                    <ProtectedRoute>
+                        <TaskPage />
+                    </ProtectedRoute>
+                </Suspense>
+            )
             },
             {
                 path: '/error',

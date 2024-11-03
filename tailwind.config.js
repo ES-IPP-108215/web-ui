@@ -6,12 +6,23 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-  	extend: {
+	extend: {
+		fontFamily: {
+			sans: ['Nunito', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
+			handwritten: ['Caveat', 'cursive'],
+		  },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+		height: {
+		  "screen-1/6" : "16.666666vh",
+		  "screen-2/6" : "33.333333vh",
+		  "screen-3/6" : "50vh",
+		  "screen-4/6" : "66.666666vh",
+		  "screen-5/6" : "83.333333vh",
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
