@@ -28,4 +28,3 @@ export interface TaskCreate {
 }
 
 export type TaskState = 'to_do' | 'in_progress' | 'done';
-
