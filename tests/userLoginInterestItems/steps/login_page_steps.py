@@ -33,7 +33,7 @@ def enter_valid_credentials(context):
 @then("they should be able to log in successfully, access their account and the intended features.")
 def they_should_be_able_to_log_in_successfully_access_their_account_and_the_intended_features(context):
     wait = WebDriverWait(context.driver, 10)
-    wait.until(EC.url_to_be("http://localhost:8080/"))
+    wait.until(EC.url_to_be("http://localhost:8080/tasks"))
 
-    welcome_label = context.driver.find_element(By.XPATH, "//*[@id=\"root\"]/div[2]/div/div[2]/div/div[2]/div[1]/ul/li[1]/a")
+    welcome_label = context.driver.find_element(By.XPATH, "//*[@id=\"root\"]/div[2]/main/div/div/div[1]/button")
     assert welcome_label is not None

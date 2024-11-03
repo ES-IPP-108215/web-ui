@@ -36,6 +36,7 @@ import { TaskColumn } from "./components/TaskColumn"
 import { TaskResponse, TaskState } from "@/lib/types"
 import { priorityColors, formatState, stateOrder, customSort } from '@/utils/taskUtils'
 import { TaskDetailsDialog } from "./components/TaskDetailsDialog"
+import { AddTaskDialog } from "./components/AddTaskDialog"
 
 
 const initialTasks: TaskResponse[] = []
@@ -68,6 +69,8 @@ export default function TaskPage() {
   //fetch tasks
   const fetchTasks = async () => {
     const response = await TaskService.getTasks()
+
+    console.log(response.data)
     return response.data
   }
 
@@ -200,7 +203,16 @@ export default function TaskPage() {
           </Button>
         )
       },
-      cell: ({ row }) => <div className="text-lg">{format(new Date(row.getValue("deadline")), 'PP')}</div>,
+      cell: ({ row }) => {
+        const deadline = row.getValue("deadline")
+        return (
+          <div className="text-lg">
+            {deadline && new Date(deadline as string).getTime() > 0
+              ? format(new Date(deadline as string), 'PP')
+              : 'Not defined'}
+          </div>
+        )
+      },
     },
     {
       accessorKey: "created_at",
@@ -289,7 +301,10 @@ export default function TaskPage() {
 
   return (
     <div className="container mx-auto p-6 sm:p-8 lg:p-10 flex flex-col min-h-screen text-lg">
-      <h1 className="text-4xl sm:text-5xl text-center font-bold mb-8 sm:mb-10">Task Board</h1>
+      <div className="flex justify-between items-center mb-8 sm:mb-10">
+        <h1 className="text-4xl sm:text-5xl font-bold">Task Board</h1>
+        <AddTaskDialog/>
+      </div>
       <div className="mb-6 flex flex-wrap gap-6 items-center justify-between">
         <div className="flex gap-4">
           <Button

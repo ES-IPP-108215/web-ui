@@ -29,14 +29,14 @@ def a_user_that_is_logged_in(context):
     login_button.click()
 
     wait = WebDriverWait(context.driver, 10)
-    wait.until(EC.url_to_be("http://localhost:8080/"))
+    wait.until(EC.url_to_be("http://localhost:8080/tasks"))
 
 @when(u'they select the logout button,')
 def they_select_the_logout_button(context):
-    logout_dropdown = context.driver.find_element(By.XPATH, "//*[@id=\"radix-:r4:\"]")
+    logout_dropdown = context.driver.find_element(By.XPATH, "//*[@id=\"radix-:r5:\"]")
     logout_dropdown.click()
 
-    logout_button = context.driver.find_element(By.XPATH, "//*[@id=\"radix-:r5:\"]/div[7]/button")
+    logout_button = context.driver.find_element(By.XPATH, "//*[@id=\"radix-:r6:\"]/div[7]")
     logout_button.click()
 
 
