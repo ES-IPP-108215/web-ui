@@ -11,25 +11,25 @@ load_dotenv()
 LOGIN_SIGN_UP_URI = os.environ.get("VITE_LOGIN_SIGN_UP")
 
 
-@given(u'a user that is logged-in,')
-def a_user_that_is_logged_in(context):
-    context.driver = webdriver.Chrome()
+# @given(u'a user that is logged-in,')
+# def a_user_that_is_logged_in(context):
+#     context.driver = webdriver.Chrome()
 
-    context.driver.get(LOGIN_SIGN_UP_URI)
+#     context.driver.get(LOGIN_SIGN_UP_URI)
     
-    username_input = context.driver.find_element(By.ID, "signInFormUsername")
-    password_input = context.driver.find_element(By.ID, "signInFormPassword")
-    username_input.send_keys("usertest")
-    password_input.send_keys("test1!QUit1")
+#     username_input = context.driver.find_element(By.ID, "signInFormUsername")
+#     password_input = context.driver.find_element(By.ID, "signInFormPassword")
+#     username_input.send_keys("usertest")
+#     password_input.send_keys("test1!QUit1")
 
-    assert username_input is not None
-    assert password_input is not None
+#     assert username_input is not None
+#     assert password_input is not None
 
-    login_button = context.driver.find_element(By.NAME, "signInSubmitButton")
-    login_button.click()
+#     login_button = context.driver.find_element(By.NAME, "signInSubmitButton")
+#     login_button.click()
 
-    wait = WebDriverWait(context.driver, 10)
-    wait.until(EC.url_to_be("http://localhost:8080/tasks"))
+#     wait = WebDriverWait(context.driver, 10)
+#     wait.until(EC.url_to_be("http://localhost:8080/tasks"))
 
 @given(u'has opened the add task modal,')
 def has_opened_the_add_task_modal(context):
