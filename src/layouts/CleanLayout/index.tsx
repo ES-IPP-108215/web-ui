@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,27 +16,9 @@ import {
 } from "@/components/ui/sidebar"
 import Navbar from './Navbar'
 
-const mockUser = {
-  name: "John Doe",
-  email: "john@example.com",
-  avatar: "/avatars/john-doe.jpg",
-}
-
 const CleanLayout: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [user, setUser] = useState<typeof mockUser | null>(null)
-  const navigate = useNavigate()
 
-  const handleLogin = () => {
-    setIsLoggedIn(true)
-    setUser(mockUser)
-  }
-
-  const handleLogout = () => {
-    setIsLoggedIn(false)
-    setUser(null)
-    navigate('/')
-  }
+  const [location, setLocation] = useState<string>('Home')
 
   return (
     <SidebarProvider>
@@ -48,7 +30,17 @@ const CleanLayout: React.FC = () => {
             <Separator orientation="vertical" className="mr-2 h-4" />
             <div>
               <p>
-                In Progress
+                <Breadcrumb>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink to="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink to={location}>{location}</BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
               </p>
             </div>
           </div>

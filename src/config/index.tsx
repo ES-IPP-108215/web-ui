@@ -18,6 +18,7 @@ const config = {
     HOST,
     BASE_URL,
     API_USER_URL: `${BASE_URL}/auth`,
+    API_TASK_URL: `${BASE_URL}/tasks`,
 };
 
 export default config;
