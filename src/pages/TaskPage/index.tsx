@@ -35,6 +35,7 @@ import {
 import { TaskColumn } from "./components/TaskColumn"
 import { TaskResponse, TaskState } from "@/lib/types"
 import { priorityColors, formatState, stateOrder, customSort } from '@/utils/taskUtils'
+import { TaskDetailsDialog } from "./components/TaskDetailsDialog"
 
 
 const initialTasks: TaskResponse[] = []
@@ -240,46 +241,7 @@ export default function TaskPage() {
         const task = row.original
         return (
           <div className="flex space-x-2">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="text-lg h-10">
-                  <Eye className="h-5 w-5" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[700px]">
-                <DialogHeader>
-                  <DialogTitle className="text-3xl font-bold mb-4">{task.title}</DialogTitle>
-                </DialogHeader>
-                <div className="grid gap-6 py-4 text-lg">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <span className="font-semibold">Description:</span>
-                    <p className="col-span-3">{task.description}</p>
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <span className="font-semibold">Priority:</span>
-                    <Badge className={`${priorityColors[task.priority]} text-lg px-3 py-1`}>
-                      {task.priority}
-                    </Badge>
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <span className="font-semibold">Deadline:</span>
-                    <span>{format(new Date(task.deadline), 'PPP')}</span>
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <span className="font-semibold">Status:</span>
-                    <span>{formatState(task.state)}</span>
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <span className="font-semibold">Created:</span>
-                    <span>{format(new Date(task.created_at), 'PPP')}</span>
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <span className="font-semibold">Updated:</span>
-                    <span>{format(new Date(task.updated_at), 'PPP')}</span>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <TaskDetailsDialog task={task} />
             <Button variant="outline" size="sm" onClick={() => onEdit(task.id)} className="text-lg h-10">
               <Edit2 className="h-5 w-5" />
             </Button>
