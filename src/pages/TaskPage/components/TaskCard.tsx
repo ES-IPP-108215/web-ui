@@ -30,7 +30,10 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onDragStart, onEdit, o
       </div>
       <p className="text-lg mb-3 line-clamp-2">{task.description}</p>
       <div className="text-lg mb-3">
-        <span className="font-semibold">Deadline:</span> {format(new Date(task.deadline), 'PP')}
+        <span className="font-semibold">Deadline:</span>{' '}
+        {task.deadline && new Date(task.deadline).getTime() > 0
+          ? format(new Date(task.deadline), 'PP')
+          : 'Not defined'}
       </div>
       <div className="flex justify-between items-center">
         <div className="text-lg">

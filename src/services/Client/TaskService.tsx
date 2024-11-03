@@ -1,5 +1,6 @@
 import config from "@/config";
 import { createClient } from "./client";
+import { TaskCreate } from "@/lib/types";
 
 const client = createClient(config.API_TASK_URL);
 
@@ -8,7 +9,7 @@ const TaskService = {
         //get tasks by user
         return client.get("/");
     },
-    async createTask(task: any) {
+    async createTask(task: TaskCreate) {
         return client.post("/", task);
     },
     async getTask(taskId: string) {
