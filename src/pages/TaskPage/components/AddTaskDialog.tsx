@@ -9,7 +9,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { CalendarIcon, Clock } from 'lucide-react'
+import { CalendarIcon, Clock, Loader2 } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -71,6 +71,7 @@ export function AddTaskDialog() {
     }
     
     const task = await TaskService.createTask(apiTaskData)
+    await queryClient.invalidateQueries('tasks')
 
     return task.data
   }
@@ -78,7 +79,6 @@ export function AddTaskDialog() {
   const addTaskMutation = useMutation({
     mutationFn: addTask,
     onSuccess: () => {
-      queryClient.invalidateQueries(['tasks'])
       toast({
         variant: 'success',
         title: 'Task Created',
@@ -250,7 +250,16 @@ export function AddTaskDialog() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="text-xl py-6 px-8">Add Task</Button>
+            <Button type="submit" className="text-xl py-6 px-8" disabled={addTaskMutation.isPending}>
+              {addTaskMutation.isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating...
+                </>
+              ) : (
+                'Add Task'
+              )}
+            </Button>
           </form>
         </Form>
       </DialogContent>
