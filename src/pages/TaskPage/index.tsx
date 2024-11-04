@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { useQuery, useMutation } from "@tanstack/react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import {
   ColumnDef,
   flexRender,
@@ -38,6 +38,8 @@ import { priorityColors, formatState, stateOrder, customSort } from '@/utils/tas
 import { TaskDetailsDialog } from "./components/TaskDetailsDialog"
 import { AddTaskDialog } from "./components/AddTaskDialog"
 import { DeleteConfirmationDialog } from "./components/DeleteConfirmationDialog"
+import { useToast } from "@/hooks/use-toast"
+import { EditTaskDialog } from "./components/EditTaskDialog"
 
 
 const initialTasks: TaskResponse[] = []
@@ -52,7 +54,9 @@ export default function TaskPage() {
   const [customColumns, setCustomColumns] = React.useState<string[]>([])
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
   const { token, setUserInformation } = useUserStore()
-
+  const queryClient = useQueryClient()
+  const { toast } = useToast()
+  const [taskIdToEdit, setTaskIdToEdit] = useState<string | null>(null)
   //fetch user information
 
   const fetchUser = async () => {
@@ -95,6 +99,42 @@ export default function TaskPage() {
     },
   })
 
+  const updateTaskMutation = useMutation({
+    mutationFn: async (updateData: Partial<TaskResponse>) => {
+      const response = await TaskService.updateTask(updateData.id!, updateData)
+      return response.data
+    },
+    onMutate: async (updateData) => {
+      await queryClient.cancelQueries({ queryKey: ['tasks'] })
+      const previousTasks = queryClient.getQueryData(['tasks'])
+      queryClient.setQueryData(['tasks'], (old: TaskResponse[] | undefined) => {
+        return old?.map(task => 
+          task.id === updateData.id ? { ...task, ...updateData } : task
+        )
+      })
+      return { previousTasks }
+    },
+    onSuccess: (updatedTask) => {
+      toast({
+        variant: 'success',
+        title: 'Update Successful',
+        description: `Task "${updatedTask.title}" has been updated.`,
+      })
+    },
+    onError: (err, newTodo, context) => {
+      queryClient.setQueryData(['tasks'], context?.previousTasks)
+      toast({
+        variant: 'destructive',
+        title: 'Update Failed',
+        description: 'Failed to update task. Please try again.',
+      })
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    },
+  })
+
+
   useEffect(() => {
     if (data && token) {
       setUserInformation(data)
@@ -105,25 +145,33 @@ export default function TaskPage() {
   }, [data, setUserInformation, token, tasksData])
 
 
-  const onDragStart = (e: React.DragEvent, taskId: string) => {
-    e.dataTransfer.setData('taskId', taskId)
+  const onDragStart = (e: React.DragEvent<HTMLDivElement>, id: string) => {
+    e.dataTransfer.setData('text/plain', id)
   }
 
-  const onDragOver = (e: React.DragEvent) => {
+  const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
   }
 
-  const onDrop = (e: React.DragEvent, newState: TaskState) => {
-    const taskId = e.dataTransfer.getData('taskId')
-    setTasks(tasks.map(task => 
-      task.id === taskId ? { ...task, state: newState } : task
-    ))
+  const onDrop = (e: React.DragEvent<HTMLDivElement>, newState: TaskState) => {
+    e.preventDefault()
+    const id = e.dataTransfer.getData('text/plain')
+    const task = tasks.find(t => t.id === id)
+    
+    if (task && task.state !== newState) {
+      updateTaskMutation.mutate({ id, state: newState })
+    }
   }
 
   const onEdit = (taskId: string) => {
-    // Implement edit logic
-    console.log(`Edit task ${taskId}`)
+    setTaskIdToEdit(taskId)
   }
+
+  const handleEditSubmit = (updatedTask: TaskResponse) => {
+    updateTaskMutation.mutate(updatedTask)
+  }
+
+
 
   const onDelete = (taskId: string) => {
     setTaskToDelete(taskId)
@@ -556,6 +604,14 @@ export default function TaskPage() {
         onConfirm={confirmDelete}
         isDeleting={deleteTaskMutation.isPending}
       />
+      {taskIdToEdit && (
+        <EditTaskDialog
+          taskId={taskIdToEdit}
+          onSubmit={handleEditSubmit}
+          isOpen={!!taskIdToEdit}
+          onOpenChange={(open) => !open && setTaskIdToEdit(null)}
+        />
+      )}
     </div>
   )
 }

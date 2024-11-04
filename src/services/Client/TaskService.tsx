@@ -1,6 +1,6 @@
 import config from "@/config";
 import { createClient } from "./client";
-import { TaskCreate } from "@/lib/types";
+import { TaskCreate, TaskUpdate } from "@/lib/types";
 
 const client = createClient(config.API_TASK_URL);
 
@@ -15,8 +15,8 @@ const TaskService = {
     async getTask(taskId: string) {
         return client.get(`/${taskId}`);
     },
-    async updateTask(task: any) {
-        return client.put(`/${task.id}`, task);
+    async updateTask(taskId: string, task: TaskUpdate) {
+        return client.put(`/${taskId}`, task);
     },
     async deleteTask(taskId: string) {
         return client.delete(`/${taskId}`);
