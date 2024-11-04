@@ -27,4 +27,12 @@ export interface TaskCreate {
     priority: string;
 }
 
+export interface TaskUpdate {
+    title?: string;
+    description?: string;
+    deadline?: string;
+    priority?: string;
+    state?: string;
+}
+
 export type TaskState = 'to_do' | 'in_progress' | 'done';
