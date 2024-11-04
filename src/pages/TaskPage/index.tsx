@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation } from "@tanstack/react-query"
 import {
   ColumnDef,
   flexRender,
@@ -37,6 +37,7 @@ import { TaskResponse, TaskState } from "@/lib/types"
 import { priorityColors, formatState, stateOrder, customSort } from '@/utils/taskUtils'
 import { TaskDetailsDialog } from "./components/TaskDetailsDialog"
 import { AddTaskDialog } from "./components/AddTaskDialog"
+import { DeleteConfirmationDialog } from "./components/DeleteConfirmationDialog"
 
 
 const initialTasks: TaskResponse[] = []
@@ -49,7 +50,7 @@ export default function TaskPage() {
   const [globalFilter, setGlobalFilter] = React.useState("")
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [customColumns, setCustomColumns] = React.useState<string[]>([])
-
+  const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
   const { token, setUserInformation } = useUserStore()
 
   //fetch user information
@@ -78,6 +79,20 @@ export default function TaskPage() {
     queryKey: ["tasks"],
     queryFn: fetchTasks,
     enabled: !!token,
+  })
+
+
+  //delete task
+  const deleteTask = async (taskId: string) => {
+    await TaskService.deleteTask(taskId)
+    return taskId
+  }
+
+  const deleteTaskMutation = useMutation({
+    mutationFn: deleteTask,
+    onSuccess: (taskId) => {
+      setTasks(tasks.filter(task => task.id !== taskId))
+    },
   })
 
   useEffect(() => {
@@ -111,7 +126,18 @@ export default function TaskPage() {
   }
 
   const onDelete = (taskId: string) => {
-    setTasks(tasks.filter(task => task.id !== taskId))
+    setTaskToDelete(taskId)
+  }
+
+  const confirmDelete = () => {
+    if (taskToDelete) {
+      deleteTaskMutation.mutate(taskToDelete)
+      setTaskToDelete(null)
+    }
+  }
+
+  const cancelDelete = () => {
+    setTaskToDelete(null)
   }
 
   const resetSorting = () => {
@@ -524,6 +550,12 @@ export default function TaskPage() {
           </div>
         </div>
       )}
+      <DeleteConfirmationDialog
+        isOpen={!!taskToDelete}
+        onClose={cancelDelete}
+        onConfirm={confirmDelete}
+        isDeleting={deleteTaskMutation.isPending}
+      />
     </div>
   )
 }
