@@ -1,17 +1,12 @@
-let HOST, BASE_URL_USER, BASE_URL, WS_SCHEME, BASE_URL_GAME;
+let HOST, BASE_URL, WS_SCHEME;
 
 const scheme = {
-    HTTP: 'http://',
-    HTTPS: 'https://',
+  HTTP: "http://",
+  HTTPS: "https://",
 };
 
-if (import.meta.env.PROD) {
-    HOST = 'www.google.com';
-    BASE_URL = `${scheme.HTTPS}${HOST}`;
-} else {
-    HOST = 'localhost';
-    BASE_URL = `${scheme.HTTP}${HOST}:8000`;
-}
+HOST = "balencer-IAP-1649378944.eu-north-1.elb.amazonaws.com:444";
+BASE_URL = `${scheme.HTTPS}${HOST}`;
 
 const config = {
     PRODUCTION: import.meta.env.PROD,
