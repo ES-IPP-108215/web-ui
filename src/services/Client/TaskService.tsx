@@ -7,10 +7,10 @@ const client = createClient(config.API_TASK_URL);
 const TaskService = {
     async getTasks() {
         //get tasks by user
-        return client.get("/");
+        return client.get("");
     },
     async createTask(task: TaskCreate) {
-        return client.post("/", task);
+        return client.post("", task);
     },
     async getTask(taskId: string) {
         return client.get(`/${taskId}`);
