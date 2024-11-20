@@ -134,7 +134,7 @@ const NavbarFooter: React.FC<NavbarFooterProps> = ({ token, givenName, familyNam
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link to="https://826973542521-iap-es.auth.eu-north-1.amazoncognito.com/login?client_id=2hos7ta7g7sqlf9g5fgh976ss5&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone&redirect_uri=https%3A%2F%2Fbalencer-iap-1649378944.eu-north-1.elb.amazonaws.com%2Foauth2%2Fidpresponse">
+            <Link to="https://443370720777-es-ip-user-pool.auth.eu-north-1.amazoncognito.com/login?client_id=5n4toi4opqib8uks7podp17gd8&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone&redirect_uri=https%3A%2F%2Fes-ua.ddns.net%2Foauth2%2Fidpresponse">
               <Button
                 variant="outline"
                 className="w-full justify-start text-base py-3"
