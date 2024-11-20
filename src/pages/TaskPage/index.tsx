@@ -420,6 +420,20 @@ export default function TaskPage() {
             </SelectContent>
           </Select>
           <Select
+            value={(table.getColumn("priority")?.getFilterValue() as string) ?? "all"}
+            onValueChange={(value) => table.getColumn("priority")?.setFilterValue(value === "all" ? "" : value)}
+          >
+            <SelectTrigger className="w-[200px] text-lg py-6">
+              <SelectValue placeholder="Filter by priority" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="low">Low</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="high">High</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select
           value={sorting.length > 0 ? `${sorting[0].id}-${sorting[0].desc ? 'desc' : 'asc'}` : 'default'}
           onValueChange={(value) => {
             if (value === 'default') {
